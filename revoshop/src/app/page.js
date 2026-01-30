@@ -21,18 +21,21 @@ export default async function Home() {
 
   return (
     <Container>
-      <PromoBanner />
-      <section className="mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-          Discover Our Exclusive <span className="text-accent">Collection</span>
+      <section className="mb-24">
+        <PromoBanner />
+      </section>
+      <section className="mb-16 max-w-3xl">
+        <h1 className="mb-4 text-4xl md:text-5xl font-extrabold text-white leading-tight">
+          Discover Our Exclusive{" "}
+          <span className="text-accent">Collection</span>
         </h1>
-        <p className="text-lg text-neutral-400 max-w-2xl leading-relaxed">
-          Curated items with modern design and the best pricing. Shop from our
-          premium collection of handpicked products.
+
+        <p className="text-lg text-neutral-400 leading-relaxed">
+          Curated products with modern aesthetics and premium quality.
+          Handpicked selections designed to elevate your lifestyle.
         </p>
       </section>
-
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {products.slice(0, 12).map((product) => (
           <ProductCard key={product.id} products={product} />
         ))}
