@@ -8,9 +8,10 @@ async function getProductId(id) {
     `https://api.escuelajs.co/api/v1/products/${Number(id)}`,
     { cache: "no-store" },
   );
+  console.log(id, "ini idddd");
 
   if (res.status === 404) return null;
-  if (!res.ok) throw new Error("Failed to fetch product");
+  if (!res.ok) return null;
 
   return res.json();
 }
@@ -19,8 +20,12 @@ export default async function ProductDetailPage({ params }) {
   const { id } = await params;
   const product = await getProductId(id);
 
-  console.log(product, 'ini produkkkkk');
-  
+  const imageUrl = product.images?.[0]?.startsWith("http")
+    ? product.images[0]
+    : "/placeholder.png";
+
+  console.log(product, "ini produkkkkk");
+
   if (!product || !product.id) notFound();
 
   return (
@@ -28,12 +33,12 @@ export default async function ProductDetailPage({ params }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
         <div className="bg-neutral-800 rounded-2xl p-8 flex items-center justify-center shadow-sm border border-neutral-700 h-fit">
           <Image
-            src={product.images?.[0] || "/placeholder.png"}
+            src={imageUrl}
             alt={product.title}
             width={420}
             height={420}
+            unoptimized
             className="object-contain max-h-96 w-full"
-            priority
           />
         </div>
         <div className="flex flex-col justify-center">
@@ -50,7 +55,7 @@ export default async function ProductDetailPage({ params }) {
             {product.description}
           </p>
           <div className="flex gap-4">
-            <AddToCartButton product={product}/>
+            <AddToCartButton product={product} />
             <button className="px-6 py-3 rounded-lg border-2 border-neutral-600 text-neutral-300 font-medium hover:bg-neutral-700 active:bg-neutral-600 transition-colors duration-200 flex items-center justify-center min-w-fit">
               ♡
             </button>

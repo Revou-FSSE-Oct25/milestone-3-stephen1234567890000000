@@ -20,37 +20,44 @@ export default function PromoBanner() {
         setIsLoading(false);
       }
     }
+
     fetchPromo();
   }, []);
 
   if (isLoading) {
     return (
-      <div className="mb-14 rounded-2xl border border-neutral-800 bg-neutral-900 p-6 text-neutral-400">
-        Loading promo...
-      </div>
+      <div className="h-56 rounded-3xl border border-neutral-800 bg-neutral-900 animate-pulse" />
     );
   }
 
   if (isError) {
     return (
-      <div className="mb-14 rounded-2xl border border-red-500/30 bg-red-900/20 p-6 text-red-400">
-        Error: {isError}
+      <div className="rounded-3xl border border-red-500/30 bg-red-900/20 p-8 text-red-400">
+        Failed to load promo
       </div>
     );
   }
 
   return (
-    <div className="relative mb-16 overflow-hidden rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 p-10">
-      <div className="absolute inset-0 bg-accent/5 blur-3xl" />
+    <div className="relative overflow-hidden rounded-3xl border border-neutral-800 bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 p-10 md:p-14">
+      <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
 
-      <div className="relative z-10 max-w-2xl">
-        <p className="mb-3 text-xs uppercase tracking-widest text-accent">
-          Today’s Promo
+      <div className="relative z-10 max-w-xl">
+        <span className="mb-4 inline-block rounded-full bg-accent/10 px-4 py-1 text-xs font-semibold tracking-widest text-accent">
+          TODAY’S PROMO
+        </span>
+
+        <h2 className="mb-4 text-3xl md:text-4xl font-bold text-white leading-snug">
+          {promo.title}
+        </h2>
+
+        <p className="mb-6 text-neutral-400 leading-relaxed line-clamp-3">
+          {promo.description}
         </p>
 
-        <h2 className="mb-4 text-3xl font-bold text-white">{promo.title}</h2>
-
-        <p className="text-neutral-400 leading-relaxed">{promo.description}</p>
+        <button className="inline-flex items-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90">
+          Shop Now →
+        </button>
       </div>
     </div>
   );
