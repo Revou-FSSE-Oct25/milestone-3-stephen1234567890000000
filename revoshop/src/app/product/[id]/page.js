@@ -4,16 +4,24 @@ import AddToCartButton from "@/component/AddToCartButton";
 import { notFound } from "next/navigation";
 
 async function getProductId(id) {
-  const res = await fetch(
-    `https://api.escuelajs.co/api/v1/products/${Number(id)}`,
-    { cache: "no-store" },
-  );
   console.log(id, "ini idddd");
+  const productId = Number(id);
 
-  if (res.status === 404) return null;
-  if (!res.ok) return null;
+  if (!Number.isFinite(productId)) return null;
 
-  return res.json();
+  try {
+    const res = await fetch(
+      `https://api.escuelajs.co/api/v1/products/${productId}`,
+      { cache: "no-store" },
+    );
+
+    if (res.status === 404) return null;
+    if (!res.ok) return null;
+
+    return res.json();
+  } catch (error) {
+    return null;
+  }
 }
 
 export default async function ProductDetailPage({ params }) {

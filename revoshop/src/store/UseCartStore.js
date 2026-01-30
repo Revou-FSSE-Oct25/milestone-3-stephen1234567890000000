@@ -1,26 +1,32 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useCartStore = create((set, get) => ({
-  items: [],
+const useCartStore = create(
+  persist(
+    (set, get) => ({
+      items: [],
 
-  addToCart: (product) => {
-    const existing = get().items.find((item) => item.id === product.id);
-    if (existing) {
-      return;
-    }
+      addToCart: (product) => {
+        const exists = get().items.some((item) => item.id === product.id);
+        if (exists) return;
 
-    set((state) => ({
-      items: [...state.items, product],
-    }));
-  },
+        set((state) => ({
+          items: [...state.items, product],
+        }));
+      },
 
-  removeFromCart: (id) => {
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== id),
-    }));
-  },
+      removeFromCart: (id) => {
+        set((state) => ({
+          items: state.items.filter((item) => item.id !== id),
+        }));
+      },
 
-  clearCart: () => set({ items: [] }),
-}));
+      clearCart: () => set({ items: [] }),
+    }),
+    {
+      name: "revoshop-cart",
+    },
+  ),
+);
 
 export default useCartStore;

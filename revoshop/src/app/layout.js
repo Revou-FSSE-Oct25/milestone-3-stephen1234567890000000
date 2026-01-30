@@ -1,7 +1,7 @@
 import "./globals.css";
-import Navbar from "@/component/Navbar";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "@/component/Footer";
+import Navbar from "@/component/Navbar";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geist.variable} ${mono.variable}`}>
-      <body className="bg-neutral-950 text-neutral-100 antialiased">
+      <body className="bg-neutral-950 text-neutral-100 antialiased" suppressHydrationWarning={true}>
         <Navbar />
         <main className="py-12 md:py-16">{children}</main>
         <Footer />
