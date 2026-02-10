@@ -4,7 +4,6 @@ import AddToCartButton from "@/component/AddToCartButton";
 import { notFound } from "next/navigation";
 
 async function getProductId(id) {
-  console.log(id, "ini idddd");
   const productId = Number(id);
 
   if (!Number.isFinite(productId)) return null;
@@ -33,8 +32,6 @@ export default async function ProductDetailPage({ params }) {
   const imageUrl = product.images?.[0]?.startsWith("http")
     ? product.images[0]
     : "/placeholder.png";
-
-  console.log(product, "ini produkkkkk");
 
   return (
     <Container>
