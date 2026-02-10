@@ -48,11 +48,11 @@ export default function PromoBanner() {
         </span>
 
         <h2 className="mb-4 text-3xl md:text-4xl font-bold text-white leading-snug">
-          {promo.title}
+          {/* {promo.title} */}
         </h2>
 
         <p className="mb-6 text-neutral-400 leading-relaxed line-clamp-3">
-          {promo.description}
+          {/* {promo.description} */}
         </p>
 
         <button className="inline-flex items-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90">

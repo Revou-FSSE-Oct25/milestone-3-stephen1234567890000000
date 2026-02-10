@@ -28,13 +28,13 @@ export default async function ProductDetailPage({ params }) {
   const { id } = await params;
   const product = await getProductId(id);
 
+  if (!product || !product.id) notFound();
+
   const imageUrl = product.images?.[0]?.startsWith("http")
     ? product.images[0]
     : "/placeholder.png";
 
   console.log(product, "ini produkkkkk");
-
-  if (!product || !product.id) notFound();
 
   return (
     <Container>
