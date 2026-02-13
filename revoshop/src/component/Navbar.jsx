@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useCartStore from "@/store/useCartStore";
+import useAuthStore from "@/store/useAuthStore";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const items = useCartStore((state) => state.items ?? []);
+  const { user, logout } = useAuthStore();
   const [isMounted, setIsMounted] = useState(false);
   const cartCount = items.length;
 
@@ -18,6 +21,12 @@ export default function Navbar() {
   if (!isMounted) {
     return null;
   }
+
+  const handleLogout = () => {
+    logout();
+    document.cookie = "token=; path=/; max-age=0";
+    router.push("/login");
+  };
 
   const navItem = (href, label) => {
     const active = pathname === href;
@@ -53,7 +62,8 @@ export default function Navbar() {
           <nav className="flex items-center gap-10">
             {navItem("/", "Home")}
             {navItem("/products", "Products")}
-            {navItem("/admin", "Admin")}
+            {navItem("/ssg", "FAQ")}
+            {user?.role === "admin" && navItem("/admin", "Admin")}
 
             <Link
               href="/cart"
@@ -79,6 +89,25 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
+
+            {user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-neutral-300">{user.name}</span>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="px-4 py-2 rounded-lg bg-accent text-black text-sm font-semibold hover:bg-accent/90"
+              >
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       </div>

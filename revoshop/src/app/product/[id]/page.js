@@ -4,7 +4,6 @@ import AddToCartButton from "@/component/AddToCartButton";
 import { notFound } from "next/navigation";
 
 async function getProductId(id) {
-  console.log(id, "ini idddd");
   const productId = Number(id);
 
   if (!Number.isFinite(productId)) return null;
@@ -19,7 +18,7 @@ async function getProductId(id) {
     if (!res.ok) return null;
 
     return res.json();
-  } catch (error) {
+  } catch (error) {+
     return null;
   }
 }
@@ -28,13 +27,11 @@ export default async function ProductDetailPage({ params }) {
   const { id } = await params;
   const product = await getProductId(id);
 
+  if (!product || !product.id) notFound();
+
   const imageUrl = product.images?.[0]?.startsWith("http")
     ? product.images[0]
     : "/placeholder.png";
-
-  console.log(product, "ini produkkkkk");
-
-  if (!product || !product.id) notFound();
 
   return (
     <Container>
