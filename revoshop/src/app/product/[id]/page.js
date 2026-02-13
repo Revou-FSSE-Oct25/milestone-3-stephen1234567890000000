@@ -18,7 +18,7 @@ async function getProductId(id) {
     if (!res.ok) return null;
 
     return res.json();
-  } catch (error) {
+  } catch (error) {+
     return null;
   }
 }
